@@ -44,7 +44,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('admin/update-password') }}" class="nav-link active">
+                <a href="{{ url('admin/update-admin-password') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Update Admin Password</p>
                 </a>

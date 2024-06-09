@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Update Admin Password</li>
+              <li class="breadcrumb-item active">Update Admin Details</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,7 +29,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Update Admin Password</h3>
+                <h3 class="card-title">Update Admin Details</h3>
               </div>
               @if ($errors->any())
                   <div class="alert alert-danger">
@@ -58,7 +58,7 @@
               @endif
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="post" action="{{ url('admin/update-admin-password') }}">@csrf
+              <form method="post" action="{{ url('admin/update-admin-details') }}">@csrf
                 <div class="card-body">
                   <div class="form-group">
                     <label for="admin_email">Email address</label>

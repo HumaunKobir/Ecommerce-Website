@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
   <title>Ecommerce | Website</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -65,6 +66,7 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('admin/dist/js/demo.js') }}"></script>
+<script src="{{ url('admin/dist/js/custom.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url('admin/dist/js/pages/dashboard2.js') }}"></script>
 </body>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin;
 use Validator;
 use Auth;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -37,8 +39,39 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
         return redirect('admin/login');
     }
-    //Update Password
-    public function updatePassword(){
-        return view('admin.settings.update_password');
+    //Update Admin Password
+    public function updateAdminPassword(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            //Check current Password
+            if(Hash::check($data['current_password'],Auth::guard('admin')->user()->password)){
+                //Check if new Password is matching with Comfirm password
+                if($data['confirm_password']==$data['new_password']){
+                    Admin::where('id',Auth::guard('admin')->user()->id)->update(['password'=>bcrypt($data['new_password'])]);
+                    return redirect()->back()->with('success_message','Password Has Been Upadate Successfully!');
+                }else{
+                    return redirect()->back()->with('error_message','New Password is not match With Confirm Password!');
+                }
+
+            }else{
+                return redirect()->back()->with('error_message','Current Password is not match!');
+            }
+        }
+        $adminDetails=Admin::where('email',Auth::guard('admin')->user()->email)->first()->toArray();
+        return view('admin.settings.update_password')->with(compact('adminDetails')); 
+    }
+    //Check Current Password
+    public function checkCurrentPassword(Request $request){
+        $data = $request->all();
+        //Check current Password
+        if(Hash::check($data['current_password'],Auth::guard('admin')->user()->password)){
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+    //Update Admin Details
+    public function updateAdminDetails(){
+        return view('admin.settings.update_admin_details');
     }
 }
