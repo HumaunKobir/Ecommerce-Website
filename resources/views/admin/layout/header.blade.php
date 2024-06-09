@@ -5,7 +5,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="3" class="nav-link">Wellcom {{ Auth::guard('admin')->user()->name }} ({{ Auth::guard('admin')->user()->type }})</a>
+        <a href="#" class="nav-link">Wellcom {{ Auth::guard('admin')->user()->name }} ({{ Auth::guard('admin')->user()->type }})</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ url('admin/dashboard') }}" class="nav-link">Dashboard</a>

@@ -8,6 +8,7 @@ use App\Models\Admin;
 use Validator;
 use Auth;
 use Hash;
+use Image;
 
 class AdminController extends Controller
 {
@@ -71,7 +72,38 @@ class AdminController extends Controller
         }
     }
     //Update Admin Details
-    public function updateAdminDetails(){
+    public function updateAdminDetails(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $rules = [
+                'name' => 'required|max:255',
+                'mobile' => 'required|numeric',
+                'image' => 'required',
+            ];
+            $customMessage = [
+                'name.required' => 'Name is Required',
+                'mobile.required' => 'Mobile number is Required',
+                'mobile.numeric' => 'Valid Mobile number is Required',
+                'image.required' => 'Image is Required',
+            ];
+            $this->validate($request,$rules,$customMessage);
+            //upload image
+            if($request->hasFile('image')){
+                $image_tmp = $request->file('image');
+                if($image_tmp->isValid()){
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    $image_name = time().'-'.$request->name .'.'.$extension;
+                    $request->image->move(public_path('admin/images/photos'),$image_name); 
+                }else if(!empty($data['current_image'])){
+                    $image_name = $data['current_image'];
+                }else{
+                    $image_name = "";
+                }
+            }
+            //Update Admin Details
+            Admin::where('email',Auth::guard('admin')->user()->email)->update(['name'=>$data['name'],'mobile'=>$data['mobile'],'image'=>$image_name]);
+            return redirect()->back()->with('success_message','Admin Details Has Been Upadated Successfully!');
+        }
         return view('admin.settings.update_admin_details');
     }
 }

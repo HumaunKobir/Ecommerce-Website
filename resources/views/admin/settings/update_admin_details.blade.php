@@ -58,23 +58,27 @@
               @endif
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="post" action="{{ url('admin/update-admin-details') }}">@csrf
+              <form method="post" action="{{ url('admin/update-admin-details') }}" enctype="multipart/form-data">@csrf
                 <div class="card-body">
                   <div class="form-group">
                     <label for="admin_email">Email address</label>
                     <input class="form-control" id="admin_email" value="{{ Auth::guard('admin')->user()->email}}" readonly="" style="background-color:#666;">
                   </div>
                   <div class="form-group">
-                    <label for="current_password">Current Password</label>
-                    <input type="password" name="current_password" class="form-control" id="current_password" placeholder="Current Password"><span id="check_password"></span>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{ Auth::guard('admin')->user()->name}}">
                   </div>
                   <div class="form-group">
-                    <label for="new_password">New Password</label>
-                    <input type="password" name="new_password" class="form-control" id="new_password" placeholder="New Password">
+                    <label for="mobile">Mobile</label>
+                    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="Mobile" value="{{ Auth::guard('admin')->user()->mobile}}" >
                   </div>
                   <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirm Password">
+                    <label for="image">Upload Image</label>
+                    <input type="file" name="image" class="form-control" id="image">
+                    @if(!empty(Auth::guard('admin')->user()->image))
+                    <a target="_blank" href="{{ url('admin/images/photos/'.Auth::guard('admin')->user()->image) }}">View Image</a>
+                    <input type="hidden" name="current_image" value="{{Auth::guard('admin')->user()->image}}">
+                    @endif
                   </div>
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
